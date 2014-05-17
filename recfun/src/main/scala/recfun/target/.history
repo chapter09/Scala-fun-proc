@@ -1,0 +1,3 @@
+console
+:load Main.scala
+exit
