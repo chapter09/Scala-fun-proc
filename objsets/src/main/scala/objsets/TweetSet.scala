@@ -51,10 +51,7 @@ abstract class TweetSet {
 
   def isEmpty: Boolean
 
-  def union(that: TweetSet): TweetSet = {
-//    println(this.toString + " union "+ that.toString)
-    that.filterAcc(twit => true, this)
-  }
+  def union(that: TweetSet): TweetSet = that.filterAcc(_ => true, this)
 
   /**
    * Returns a new `TweetSet` that is the union of `TweetSet`s `this` and `that`.
@@ -74,6 +71,8 @@ abstract class TweetSet {
    * and be implemented in the subclasses?
    */
   def mostRetweeted: Tweet
+
+  def mostRetweetedAcc(acc: Tweet): Tweet
 
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
@@ -120,11 +119,12 @@ class Empty extends TweetSet {
 
   def mostRetweeted: Tweet = throw new java.util.NoSuchElementException
 
+  def mostRetweetedAcc(acc: Tweet): Tweet = acc
+
+
   def descendingByRetweet: TweetList = Nil
 
   def isEmpty: Boolean = true
-
-  //def union(that: TweetSet): TweetSet = that
 
   /**
    * The following methods are already implemented
@@ -141,21 +141,12 @@ class Empty extends TweetSet {
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
-  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
-//    if (p(elem)) left.filterAcc(p, acc) union right.filterAcc(p, acc) union acc.incl(elem)
-//    else left.filterAcc(p, acc) union right.filterAcc(p, acc)
-    if (p(elem)) left.filterAcc(p, right.filterAcc(p, acc.incl(elem)))
-    else left.filterAcc(p, right.filterAcc(p, acc))
-  }
+  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet =
+    right.filterAcc(p, left.filterAcc(p, if (p(elem)) acc.incl(elem) else acc))
 
   def isEmpty: Boolean = false
 
-//  def union(that: TweetSet): TweetSet = {
-////    println(this.toString + " union "+ that.toString)
-//    (left union right) union that incl elem
-//  }
-
-  def mostRetweeted: Tweet = {
+//  def mostRetweeted: Tweet =
 //    try {
 //      if (elem.retweets < left.mostRetweeted.retweets) left.mostRetweeted
 //      else if (elem.retweets < right.mostRetweeted.retweets) right.mostRetweeted
@@ -166,13 +157,12 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 //      }
 //    }
 
-    def maxRet(Twit1: Tweet, Twit2: Tweet): Tweet = {
-      if (Twit1.retweets > Twit2.retweets) Twit1 else Twit2
-    }
-    if (left.isEmpty && right.isEmpty) elem
-    else if (right.isEmpty) maxRet(left.mostRetweeted,elem)
-    else if (left.isEmpty) maxRet(right.mostRetweeted,elem)
-    else maxRet(left.mostRetweeted,maxRet(left.mostRetweeted,elem))
+  def mostRetweeted: Tweet = {
+    mostRetweetedAcc(elem)
+  }
+
+  def mostRetweetedAcc(acc: Tweet): Tweet = {
+    right.mostRetweetedAcc(left.mostRetweetedAcc(if (elem.retweets > acc.retweets) elem else acc))
   }
 
   def descendingByRetweet: TweetList =
