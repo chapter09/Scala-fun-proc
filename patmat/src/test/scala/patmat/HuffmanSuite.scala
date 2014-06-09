@@ -26,6 +26,16 @@ class HuffmanSuite extends FunSuite {
     }
   }
 
+  test("times") {
+    assert(times(List('a', 'a', 'a', 't', 'u', 'r', 'n', 'e', 'd', 'l', 'i', 's', 's', 't')) ===
+      List(('a', 3), ('t', 2), ('u', 1), ('r', 1), ('n', 1), ('e', 1), ('d', 1), ('l', 1), ('i', 1), ('s', 2)))
+  }
+
+  test("makeOrderedLeafList") {
+    assert(makeOrderedLeafList(times(List('a', 'a', 'a', 't', 'u', 'r', 'n', 'e', 'd', 'l', 'i', 's', 's', 't'))) ===
+      List(('u', 1), ('r', 1), ('n', 1), ('e', 1), ('d', 1), ('l', 1), ('i', 1), ('t', 2), ('s', 2), ('a', 3)).map(i => Leaf(i._1, i._2)))
+  }
+
   test("string2chars(\"hello, world\")") {
     assert(string2Chars("hello, world") === List('h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd'))
   }

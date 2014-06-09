@@ -109,9 +109,7 @@ object Huffman {
    */
   def combine(trees: List[CodeTree]): List[CodeTree] = {
     if (trees.length < 2) trees
-    else
-      (Fork(trees.head, trees.tail.head, chars(trees.head) ::: chars(trees.tail.head),
-      weight(trees.head) + weight(trees.tail.head)) :: trees.tail.tail).sortBy(weight)
+    else (makeCodeTree(trees.head, trees.tail.head) :: trees.tail.tail).sortBy(weight)
   }
 
 
@@ -134,8 +132,7 @@ object Huffman {
    */
   def until(singleton: List[CodeTree] => Boolean,
             combine: List[CodeTree] => List[CodeTree])(trees: List[CodeTree]): List[CodeTree] = {
-    if (singleton(trees)) trees
-    else until(singleton, combine)(combine(trees))
+    if (singleton(trees)) trees else until(singleton, combine)(combine(trees))
   }
 
   /**
@@ -145,7 +142,7 @@ object Huffman {
    * frequencies from that text and creates a code tree based on them.
    */
   def createCodeTree(chars: List[Char]): CodeTree =
-    until(singleton,combine)(makeOrderedLeafList(times(chars)))(0)
+    until(singleton, combine)(makeOrderedLeafList(times(chars))).head
 
 
   // Part 3: Decoding
@@ -159,8 +156,8 @@ object Huffman {
   def decode(tree: CodeTree, bits: List[Bit]): List[Char] = {
     def wrapper(subtree: CodeTree, bits: List[Bit]): List[Char] = subtree match {
       case leaf: Leaf =>
-        if (bits == Nil) List(leaf.char)
-        else List(leaf.char) ::: wrapper(tree, bits)
+        if (bits.isEmpty) List(leaf.char)
+        else leaf.char :: wrapper(tree, bits)
       case fork: Fork =>
         if (bits.head == 0) wrapper(fork.left, bits.tail)
         else wrapper(fork.right, bits.tail)
@@ -196,17 +193,13 @@ object Huffman {
    */
   def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
 
-    def wrapper(tree: CodeTree, char: Char, bits: List[Bit]): List[Bit] = tree match {
-      case leaf: Leaf =>
-        if (leaf.char == char) bits else Nil
-
+    def wrapper(tree: CodeTree)(char: Char): List[Bit] = tree match {
+      case leaf: Leaf => List()
       case fork: Fork =>
-        if (wrapper(fork.left, char, bits:+0) != Nil) bits:+0
-        else if (wrapper(fork.right, char, bits:+1) != Nil) bits:+1
-        else Nil
+        if (chars(fork.left).contains(char)) 0 :: wrapper(fork.left)(char) else 1 :: wrapper(fork.right)(char)
     }
 
-    text.map(char => wrapper(tree, char, Nil)).flatten
+    text.flatMap(wrapper(tree))
   }
 
 
@@ -219,8 +212,8 @@ object Huffman {
    * the code table `table`.
    */
   def codeBits(table: CodeTable)(char: Char): List[Bit] =
-    if (table.head._1 == char) table.head._2
-    else codeBits(table.tail)(char)
+    table.filter(code => code._1 == char).head._2
+
 
   /**
    * Given a code tree, create a code table which contains, for every character in the
@@ -251,4 +244,13 @@ object Huffman {
    */
   def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] =
     text.map(char => codeBits(convert(tree))(char)).flatten
+}
+
+
+object Huffman_runner extends App {
+  println(Huffman.times(List('a', 'a', 'a', 't', 'u', 'r', 'n', 'e', 'd', 'l', 'i', 's', 't')))
+  type Bit = Int
+  val secret: List[Bit] = List(1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1)
+
+  println(Huffman.encode(Huffman.frenchCode)(Huffman.decode(Huffman.frenchCode, secret)))
 }
