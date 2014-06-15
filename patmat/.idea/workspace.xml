@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b3bf9b4-c89c-49bf-b9a5-9ed18c3cd732" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala" afterPath="$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/patmat/HuffmanSuite.scala" afterPath="$PROJECT_DIR$/src/test/scala/patmat/HuffmanSuite.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="progfun-patmat.iws" />
@@ -30,8 +28,8 @@
       <file leaf-file-name="Huffman.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7204969" vertical-offset="1786" max-vertical-offset="3045">
-              <caret line="208" column="0" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.79037267" vertical-offset="1786" max-vertical-offset="3045">
+              <caret line="211" column="28" selection-start-line="211" selection-start-column="28" selection-end-line="211" selection-end-column="28" />
               <folding>
                 <element signature="n#!!doc;n#Huffman$#0;n#!!top" expanded="false" />
                 <element signature="e#96#563#0" expanded="false" />
@@ -219,6 +217,7 @@
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
     <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../forcomp/build.sbt" />
   </component>
   <component name="RunManager" selected="ScalaTest.HuffmanSuite">
     <configuration default="false" name="HuffmanSuite" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
@@ -498,12 +497,16 @@
       <created>1402303762331</created>
       <updated>1402303762331</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Final Submit&#10;update encode function">
+      <created>1402317078753</created>
+      <updated>1402317078753</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="2406" y="22" width="927" height="1056" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -549,7 +552,8 @@
     </option>
     <MESSAGE value="new assignment&#10;" />
     <MESSAGE value="Assignments 4 first submit&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Assignments 4 first submit&#10;" />
+    <MESSAGE value="Final Submit&#10;update encode function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Submit&#10;update encode function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -600,8 +604,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7204969" vertical-offset="1786" max-vertical-offset="3045">
-          <caret line="208" column="0" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.79037267" vertical-offset="1786" max-vertical-offset="3045">
+          <caret line="211" column="28" selection-start-line="211" selection-start-column="28" selection-end-line="211" selection-end-column="28" />
           <folding>
             <element signature="n#!!doc;n#Huffman$#0;n#!!top" expanded="false" />
             <element signature="e#96#563#0" expanded="false" />
